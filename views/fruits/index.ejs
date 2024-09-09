@@ -1,5 +1,4 @@
 <!-- views/fruits/index.ejs -->
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -13,6 +12,11 @@
     <ul>
       <% fruits.forEach(fruit => { %>
         <li><a href="/fruits/<%= fruit._id %>"><%= fruit.name %></a></li>
+        <!-- delete -->
+        <form action="/fruits/<%= fruit._id %>?_method=DELETE" method="POST">
+          <button type="submit">DELETE</button>
+        </form>
+        <a href="/fruits/<%= fruit._id %>/edit">Edit </a>
       <% }); %>
     </ul>
   </body>

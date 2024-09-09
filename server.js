@@ -11,6 +11,8 @@ const mongoose = require("mongoose");
 const Fruit = require("./models/fruit.js");
 
 const app = express();
+const methodOverride = require("method-override"); // new
+const morgan = require("morgan"); //new
 
 mongoose.connect(process.env.MONGODB_URI);
 
@@ -21,13 +23,11 @@ mongoose.connection.on('connected', function () {
 
 //middleware====================================
 app.use(express.urlencoded({ extended: false }));
-
-
+app.use(methodOverride("_method")); // new
+app.use(morgan("dev")); //new
 
 
 //Endpoints =====================================
-// Inorder to create a new fruit, we need to create a form
-
 
 app.get("/fruits/new", (req, res) => {
     res.render("fruits/new.ejs");
@@ -48,6 +48,15 @@ app.post("/fruits", async (req, res) => {
     res.redirect("/fruits");
 });
 
+app.delete("/fruits/:fruitId", async (req, res) => {
+    const deleteFruit  = await Fruit.findByIdAndDelete(req.params.fruitId);
+    res.redirect("/fruits");
+});
+
+app.get("/fruits/:fruitId/edit", async (req, res) => {
+    const fruitId = await Fruit.findById(req.params.fruitId);
+    res.render("fruits/edit.ejs", { fruit: fruitId });
+})
 
 app.get("/fruits", async (req, res) => {
     const allFruits = await Fruit.find();

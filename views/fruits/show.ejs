@@ -9,6 +9,7 @@
     <a href="/fruits/">Back to Fruits</a>
     <h1><%= fruit.name %></h1> <!-- Display fruit name -->
     <!-- Add more details about the fruit here -->
-    <p>Ready to Eat: <%= fruit.isReadyToEat ? "Yes" : "No" %></p> <!-- Display whether the fruit is ready to eat -->
+     <!-- <FruitName> is not ready to Eat   <FruitName> is ready to eat -->
+    <p><%= fruit.isReadyToEat ? `${fruit.name} is ready to eat` : `${fruit.name} is not ready to eat` %></p>
   </body>
 </html>
